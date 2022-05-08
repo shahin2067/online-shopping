@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:online_shopping/view/home/home_screen.dart';
 import 'package:online_shopping/view/splash/splash_screen.dart';
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.amber,
       ),
+      builder: EasyLoading.init(),
       //home: const MyHomePage(title: 'Flutter Demo Home Page'),
       getPages: [
         GetPage(name: '/', page: ()=>const SplashScreen()),

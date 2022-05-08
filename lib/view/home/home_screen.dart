@@ -2,6 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:online_shopping/controller/home_screen_controller.dart';
+import 'package:online_shopping/util/urls.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:online_shopping/view/home/widget/category_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -11,11 +13,12 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //print('image: ${_controller.bannerData.value.banners![1].image??''}');
     return Scaffold(
       backgroundColor: Color(0xffEBEAEF),
       body: CustomScrollView(
         slivers: [
-          SliverAppBar(
+          const SliverAppBar(
             title: Text('Home Screen'),
             floating: true,
             //pinned: true,
@@ -82,33 +85,33 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+
   Widget _sliderWidget(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(5),
       child: Stack(
         children: [
-        CarouselSlider.builder(
-            itemCount: _controller.bannerData.length,
-            itemBuilder: (context, index, realIndex) =>
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.width / 3,
-                  child: Image.network(_controller.bannerData[index], fit: BoxFit.cover,),
-                ),
+          Obx(()=>_controller.isLoading==true?Container(): CarouselSlider.builder(
+
+            itemCount: _controller.bannerData.value.banners?.length??0,
+            itemBuilder: (context, index, realIndex) => SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.width/3,
+              child: Image.network('${Urls.bannerImageUrl}${_controller.bannerData.value.banners![index].image??''}',fit: BoxFit.cover, ),
+            ),
 
             options: CarouselOptions(
                 enlargeCenterPage: true,
-                height: MediaQuery.of(context).size.width / 3,
+                height: MediaQuery.of(context).size.width/3,
                 viewportFraction: 1,
                 disableCenter: true,
                 autoPlay: true,
                 pauseAutoPlayOnTouch: true,
                 onPageChanged: (index, reason) {
-                  //_controller.sliderCurrentPosition.value=index;
-                  _controller.sliderCurrentPosition.value = index;
+                  _controller.sliderCurrentPosition.value=index;
 
                   // setState(() {
-                  //   sliderCurrentPosition = index;
+                  //   sliderCurrentIndex = index;
                   // });
 
                   // print(index);
@@ -116,32 +119,51 @@ class HomeScreen extends StatelessWidget {
                 }
             ),
 
-          ),
-
+          )),
           Positioned(
-              bottom: 5,
-              left: (MediaQuery.of(context).size.width - 25) / 2,
-              child: Obx(()=>Row(
-                children: _controller.bannerData.map((e) {
-                  var currentIndex = _controller.bannerData.indexOf(e);
+              bottom: 10,
+              left: (MediaQuery.of(context).size.width-25)/2,
+              child: Obx(()=>_controller.isLoading==true?Container(): Row(
+                children: _controller.bannerData.value.banners!.map((e) {
+                  var currentIndex=_controller.bannerData.value.banners?.indexOf(e);
                   return Container(
                     margin: const EdgeInsets.only(left: 5),
                     height: 10,
                     width: 10,
-                    decoration: BoxDecoration(
-                      //color: bannerData==currentIndex?Colors.amber:Colors.black,
-                        color: _controller.sliderCurrentPosition.value == currentIndex ? Colors
-                            .amber : Colors.black,
-                        borderRadius: const BorderRadius.all(
-                            Radius.circular(10))
+                    decoration:  BoxDecoration(
+                        color: _controller.sliderCurrentPosition.value==currentIndex?Colors.amber:Colors.black,
+                        borderRadius: const BorderRadius.all(Radius.circular(10))
 
                     ),
 
                   );
                 }).toList(),
-              )))
+              ))
+
+          )
         ],
       ),
     );
   }
+
+  Widget _shimmerSliderWidget(BuildContext context) {
+    return Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.width/3,
+      child: Shimmer.fromColors(
+        baseColor: Colors.black,
+        highlightColor: Colors.white,
+        child: Container(
+          margin: EdgeInsets.all(5),
+          decoration: BoxDecoration(
+              color: Colors.grey.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(5)
+          ),
+        ),
+      ),
+            );
+
+  }
+
+
 }
