@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:online_shopping/util/app_colors.dart';
 import 'package:online_shopping/view/home/home_screen.dart';
 
 
@@ -28,7 +29,7 @@ class SplashScreen extends StatelessWidget {
                 height: 40,
                 width: 40,
                 child: CircularProgressIndicator(
-                  color: Colors.amber,
+                  color: AppColors.primaryColor,
                 ),
               ),
             )

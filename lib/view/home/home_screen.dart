@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:online_shopping/controller/home_screen_controller.dart';
+import 'package:online_shopping/view/home/widget/category_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   static const routeName = '/home_screen';
@@ -11,6 +12,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xffEBEAEF),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -21,6 +23,60 @@ class HomeScreen extends StatelessWidget {
           SliverToBoxAdapter(
             child: _sliderWidget(context),
           ),
+          SliverToBoxAdapter(
+            child: CategoryWidget(),
+          ),
+
+
+          // SliverToBoxAdapter(
+          //   child: Container(
+          //     height: 100,
+          //     width: 200,
+          //     color: Colors.red,
+          //   ),
+          // ),
+          // SliverToBoxAdapter(
+          //   child: Container(
+          //     height: 100,
+          //     width: 200,
+          //     color: Colors.blue,
+          //   ),
+          // ),
+          // SliverToBoxAdapter(
+          //   child: Container(
+          //     height: 100,
+          //     width: 200,
+          //     color: Colors.red,
+          //   ),
+          // ),
+          // SliverToBoxAdapter(
+          //   child: Container(
+          //     height: 100,
+          //     width: 200,
+          //     color: Colors.blue,
+          //   ),
+          // ),
+          // SliverToBoxAdapter(
+          //   child: Container(
+          //     height: 100,
+          //     width: 200,
+          //     color: Colors.red,
+          //   ),
+          // ),
+          // SliverToBoxAdapter(
+          //   child: Container(
+          //     height: 100,
+          //     width: 200,
+          //     color: Colors.blue,
+          //   ),
+          // ),
+          // SliverToBoxAdapter(
+          //   child: Container(
+          //     height: 100,
+          //     width: 200,
+          //     color: Colors.red,
+          //   ),
+          // ),
         ],
       ),
     );
